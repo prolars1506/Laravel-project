@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
 
@@ -14,7 +14,17 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    <div class="col-md-12">
+                        <div class="row">
+                            @each('products.parts.product_view', $products, 'product')
+                        </div>
+                    </div>
+                    <br>
+                        <div class="col-md-12">
+                            <div class="row">
+                                @each('categories.parts.category_view', $categories , 'category')
+                            </div>
+                        </div>
                 </div>
             </div>
         </div>
