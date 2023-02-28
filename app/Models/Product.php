@@ -39,8 +39,10 @@ class Product extends Model
             FileStorageService::remove($this->attributes['thumbnail']);
         }
 
-        $this->attributes['thumbnail'] = FileStorageService::upload($image,
-            str_replace(' ', '_', $this->attributes['title']));
+        $this->attributes['thumbnail'] = FileStorageService::upload(
+            $image,
+            strtolower(str_replace(' ', '_', $this->attributes['title']))
+        );
     }
 
     public function thumbnailUrl(): Attribute
@@ -49,6 +51,13 @@ class Product extends Model
             get: fn() => Storage::exists($this->attributes['thumbnail'])
                         ? Storage::url($this->attributes['thumbnail'])
                         : $this->attributes['thumbnail']
+        );
+    }
+
+    public function slug(): Attribute
+    {
+        return Attribute::make(
+          get: fn() => strtolower(str_replace(' ', '_', $this->attributes['title']))
         );
     }
 

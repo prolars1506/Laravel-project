@@ -11,16 +11,20 @@ use Illuminate\Support\Facades\Storage;
 class Image extends Model
 {
     use HasFactory;
+
     protected $guarded = [];
 
-    public function imagiable()
+    public function imageable()
     {
         return $this->morphTo();
     }
 
     public function setPathAttribute($image)
     {
-        $this->attributes['path'] = FileStorageService::upload($image);
+        $this->attributes['path'] = FileStorageService::upload(
+            $image,
+            $this->attributes['directory'] ?? null
+        );
     }
 
     public function url(): Attribute
